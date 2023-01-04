@@ -4,14 +4,9 @@ export const HeaderContainer = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 2rem 10rem;
 
   img {
     width: 5.309rem;
-  }
-
-  @media (max-width: 768px) {
-    padding: 2rem 2rem;
   }
 `
 
@@ -45,10 +40,15 @@ export const LocaleContainer = styled.div`
 
   padding: 8px;
 
+  color: ${(props) => props.theme['purple-500']};
   background-color: ${(props) => props.theme['purple-100']};
   border-radius: 6px;
 
-  color: ${(props) => props.theme['purple-500']};
+  span {
+    color: ${(props) => props.theme['purple-900']};
+    font-size: 0.875rem;
+    line-height: 130%;
+  }
 `
 
 export const CartCounter = styled.span`
@@ -68,4 +68,6 @@ export const CartCounter = styled.span`
 
   background-color: ${(props) => props.theme['yellow-900']};
   color: ${(props) => props.theme.white};
+  font-size: 0.75rem;
+  font-weight: bold;
 `
