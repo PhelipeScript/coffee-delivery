@@ -1,5 +1,15 @@
 import styled from 'styled-components'
 
+export const FormContainer = styled.form`
+  display: flex;
+  gap: 2rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+`
+
 export const CompleteOrderContainer = styled.div`
   h2 {
     margin-top: 4.5rem;
@@ -131,5 +141,63 @@ export const PaymentsLabel = styled.label`
     &:checked {
       border: 1px solid ${(props) => props.theme['purple-500']};
     }
+  }
+`
+
+export const SelectedCoffeesContainer = styled.div`
+  h2 {
+    margin-top: 4.5rem;
+
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.125rem;
+    font-weight: 700;
+    line-height: 130%;
+  }
+`
+
+export const ConfirmOrderContainer = styled(ContainerBase)`
+  min-height: 14.125rem;
+  border-radius: 6px 44px;
+`
+
+export const PriceContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.844rem;
+
+  width: 23rem;
+
+  div {
+    display: flex;
+    justify-content: space-between;
+
+    @media (max-width: 768px) {
+      margin-right: 2.5rem;
+    }
+  }
+`
+
+export const ButtonContainer = styled.button`
+  margin-top: 1.5rem;
+  padding: 12px;
+  width: 100%;
+
+  border: 0;
+  border-radius: 6px;
+
+  background-color: ${(props) => props.theme['yellow-500']};
+  color: ${(props) => props.theme.white};
+
+  font-size: 0.875rem;
+  font-weight: bold;
+  line-height: 160%;
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  transition: background-color 0.1s ease;
+
+  &:not(:disabled):hover {
+    background-color: ${(props) => props.theme['yellow-900']};
   }
 `

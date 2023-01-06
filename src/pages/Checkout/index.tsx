@@ -5,16 +5,22 @@ import {
   MapPinLine,
   Money,
 } from 'phosphor-react'
+import { CartsItem } from './CartsItem'
 import {
   AddressContainer,
   BuildingNumberInput,
+  ButtonContainer,
   CityInput,
   ComplementInput,
   CompleteOrderContainer,
+  ConfirmOrderContainer,
+  FormContainer,
   InputsContainer,
   NeighborhoodInput,
   PaymentContainer,
   PaymentsLabel,
+  PriceContainer,
+  SelectedCoffeesContainer,
   StateInput,
   StreetInput,
   ZIPCodeInput,
@@ -22,7 +28,7 @@ import {
 
 export function Checkout() {
   return (
-    <form>
+    <FormContainer>
       <CompleteOrderContainer>
         <h2>Complete seu pedido</h2>
         <AddressContainer>
@@ -109,6 +115,30 @@ export function Checkout() {
           </InputsContainer>
         </PaymentContainer>
       </CompleteOrderContainer>
-    </form>
+
+      <SelectedCoffeesContainer>
+        <h2>Cafés selecionados</h2>
+        <ConfirmOrderContainer>
+          <CartsItem />
+          <CartsItem />
+          <PriceContainer>
+            <div>
+              <span>Total de itens</span>
+              <span>R$ 29,70</span>
+            </div>
+            <div>
+              <span>Entrega</span>
+              <span>R$ 3,50</span>
+            </div>
+            <div>
+              <strong>Total</strong>
+              <strong>R$ 33,20</strong>
+            </div>
+          </PriceContainer>
+
+          <ButtonContainer>confirmar pedido</ButtonContainer>
+        </ConfirmOrderContainer>
+      </SelectedCoffeesContainer>
+    </FormContainer>
   )
 }
