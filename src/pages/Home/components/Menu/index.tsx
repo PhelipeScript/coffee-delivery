@@ -1,4 +1,4 @@
-import { ItemCard } from '../ItemCard'
+import { ItemCard } from './ItemCard'
 import { Coffees } from './Coffees'
 import { ItensContainer, MenuContainer } from './styles'
 

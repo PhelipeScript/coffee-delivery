@@ -110,12 +110,6 @@ export const AmountContainer = styled.div`
       text-align: center;
 
       width: 1.35rem;
-
-      &::-webkit-outer-spin-button,
-      &::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-      }
     }
   }
 `

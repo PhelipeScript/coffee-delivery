@@ -1,4 +1,5 @@
 import { Minus, Plus, ShoppingCartSimple } from 'phosphor-react'
+import { useState } from 'react'
 
 import {
   AddCartButton,
@@ -20,6 +21,16 @@ interface ItemCardProps {
 }
 
 export function ItemCard({ item }: ItemCardProps) {
+  const [amount, setAmount] = useState(1)
+
+  function handleIncreaseAmount() {
+    setAmount((state) => (state < 99 ? state + 1 : state))
+  }
+
+  function handleDecreaseAmount() {
+    setAmount((state) => (state > 1 ? state - 1 : state))
+  }
+
   return (
     <CardContainer>
       <img src={item.imageURL} alt="" />
@@ -36,9 +47,19 @@ export function ItemCard({ item }: ItemCardProps) {
         </span>
         <AmountContainer>
           <div>
-            <Minus cursor="pointer" size={14} weight="bold" />
-            <input defaultValue={1} type="number" min={1} max={99} />
-            <Plus cursor="pointer" size={14} weight="bold" />
+            <Minus
+              onClick={handleDecreaseAmount}
+              cursor="pointer"
+              size={14}
+              weight="bold"
+            />
+            <input readOnly value={amount} type="number" min={1} max={99} />
+            <Plus
+              onClick={handleIncreaseAmount}
+              cursor="pointer"
+              size={14}
+              weight="bold"
+            />
           </div>
 
           <AddCartButton>
