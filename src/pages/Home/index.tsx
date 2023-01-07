@@ -1,6 +1,6 @@
 import { Coffee, Package, ShoppingCart, Timer } from 'phosphor-react'
 import coffeeIllustration from '../../assets/coffee-illustration.svg'
-import { Menu } from './components/Menu'
+import { Menu } from './Menu'
 import {
   BackgroundIconCart,
   BackgroundIconCoffee,
