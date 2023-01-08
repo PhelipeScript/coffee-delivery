@@ -679,6 +679,10 @@ Error generating stack: `+o.message+`
   padding: 8px;
   border-radius: 1000px;
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   color: ${e=>e.theme.white};
 `,Ik=G(Ac)`
   background-color: ${e=>e.theme["purple-500"]};
