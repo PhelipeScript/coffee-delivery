@@ -1,11 +1,19 @@
-import { createContext, ReactNode, useState } from 'react'
-
-interface ItemProps {
-  id: string
-  imageURL: string
-  price: number
-  amount: number
-}
+import {
+  createContext,
+  ReactNode,
+  useEffect,
+  useReducer,
+  useState,
+} from 'react'
+import {
+  ActionTypes,
+  addItemToCartAction,
+  clearCartAction,
+  decreaseItemAmountAction,
+  increaseItemAmountAction,
+  removeItemFromCartAction,
+} from '../reducers/itemsCart/actions'
+import { ItemProps, itemsCartReducer } from '../reducers/itemsCart/reducer'
 
 interface NewOrderData {
   address: {
@@ -42,7 +50,22 @@ interface OrderContextProviderProps {
 export function OrderContextProvider({ children }: OrderContextProviderProps) {
   const [orders, setOrder] = useState<NewOrderData[]>([])
 
-  const [itemsCart, setItemsCart] = useState<ItemProps[]>([])
+  const [itemsCart, dispatch] = useReducer(itemsCartReducer, [], () => {
+    const storedStateAsJSON = localStorage.getItem(
+      '@coffee-delivery:items-cart-1.0.0',
+    )
+
+    if (storedStateAsJSON) {
+      return JSON.parse(storedStateAsJSON)
+    }
+    return []
+  })
+
+  useEffect(() => {
+    const stateJSON = JSON.stringify(itemsCart)
+
+    localStorage.setItem('@coffee-delivery:items-cart-1.0.0', stateJSON)
+  }, [itemsCart])
 
   function createNewOrder(order: NewOrderData) {
     setOrder((state) => [...state, order])
@@ -56,7 +79,7 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
       return item
     })
 
-    setItemsCart([...newItemsCart])
+    dispatch(increaseItemAmountAction(newItemsCart))
   }
 
   function decreaseItemInCartAmount(itemName: string) {
@@ -67,26 +90,26 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
       return item
     })
 
-    setItemsCart([...newItemsCart])
+    dispatch(decreaseItemAmountAction(newItemsCart))
   }
 
-  function addItemToCart({ id, imageURL, amount, price }: ItemProps) {
-    const alreadyInCart = itemsCart.find((item) => item.id === id)
+  function addItemToCart(newItem: ItemProps) {
+    const alreadyInCart = itemsCart.find((item) => item.id === newItem.id)
     if (alreadyInCart) {
-      return window.alert(`${id} já foi adicionado ao carrinho`)
+      return window.alert(`${newItem.id} já foi adicionado ao carrinho`)
     }
 
-    setItemsCart((state) => [...state, { id, imageURL, amount, price }])
+    dispatch(addItemToCartAction(newItem))
   }
 
   function removeItemFromCart(id: string) {
     const newItemsCart = itemsCart.filter((item) => item.id !== id)
 
-    setItemsCart((state) => [...newItemsCart])
+    dispatch(removeItemFromCartAction(newItemsCart))
   }
 
   function clearCart() {
-    setItemsCart([])
+    dispatch(clearCartAction())
   }
 
   return (
