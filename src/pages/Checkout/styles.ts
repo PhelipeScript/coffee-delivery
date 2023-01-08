@@ -18,6 +18,23 @@ export const CompleteOrderContainer = styled.div`
     font-size: 1.125rem;
     font-weight: 700;
     line-height: 130%;
+
+    position: relative;
+
+    a {
+      position: absolute;
+      top: -2.5rem;
+
+      padding: 6px;
+      border-radius: 1000px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      color: ${(props) => props.theme.white};
+      background-color: ${(props) => props.theme['gray-600']};
+    }
   }
 `
 

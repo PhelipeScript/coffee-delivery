@@ -1,9 +1,12 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as zod from 'zod'
+import { useContext, useEffect } from 'react'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 import {
   Bank,
+  CaretLeft,
   CreditCard,
   CurrencyDollar,
   MapPinLine,
@@ -11,6 +14,8 @@ import {
 } from 'phosphor-react'
 
 import { CartsItem } from './CartsItem'
+
+import { OrderContext } from '../../contexts/OrderContext'
 
 import {
   AddressContainer,
@@ -31,8 +36,6 @@ import {
   StreetInput,
   ZIPCodeInput,
 } from './styles'
-import { useContext, useEffect } from 'react'
-import { OrderContext } from '../../contexts/OrderContext'
 
 const newOrderFormValidationSchema = zod.object({
   ZIPCode: zod
@@ -56,7 +59,8 @@ const newOrderFormValidationSchema = zod.object({
 type NewOrderFormData = zod.infer<typeof newOrderFormValidationSchema>
 
 export function Checkout() {
-  const { itemsCart, clearCart } = useContext(OrderContext)
+  const navigate = useNavigate()
+  const { itemsCart, clearCart, createNewOrder } = useContext(OrderContext)
 
   const { register, handleSubmit, formState, reset } =
     useForm<NewOrderFormData>({
@@ -73,10 +77,23 @@ export function Checkout() {
       },
     })
 
+  const deliveryFee = itemsCart.length === 0 ? 0.0 : 3.5
+  const itemsTotalPrice = itemsCart.reduce(
+    (prevVal, elem) => prevVal + elem.price * elem.amount,
+    0,
+  )
+
   function handleCreateNewOrder(data: NewOrderFormData) {
-    console.log(data)
+    const address = { ...data }
+    const selectedItem = itemsCart
+    const totalPrice = Number(itemsTotalPrice.toFixed(2))
+
+    createNewOrder({ address, selectedItem, totalPrice })
     reset()
     clearCart()
+    setTimeout(() => {
+      navigate('/checkout/success')
+    }, 1000)
   }
 
   useEffect(() => {
@@ -110,18 +127,17 @@ export function Checkout() {
     }
   }, [formState.errors])
 
-  const deliveryFee = itemsCart.length === 0 ? 0.0 : 3.5
-  const itemsTotalPrice = itemsCart.reduce(
-    (prevVal, elem) => prevVal + elem.price * elem.amount,
-    0,
-  )
-
   const isSubmitButtonDisabled = itemsCart.length === 0
 
   return (
     <FormContainer onSubmit={handleSubmit(handleCreateNewOrder)}>
       <CompleteOrderContainer>
-        <h2>Complete seu pedido</h2>
+        <h2>
+          <NavLink to="/">
+            <CaretLeft />
+          </NavLink>
+          Complete seu pedido
+        </h2>
         <AddressContainer>
           <h3>
             <MapPinLine color="#C47F17" size={22} />

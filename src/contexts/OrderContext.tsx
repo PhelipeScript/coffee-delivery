@@ -7,13 +7,30 @@ interface ItemProps {
   amount: number
 }
 
+interface NewOrderData {
+  address: {
+    ZIPCode: string
+    Street: string
+    BuildingNumber: string
+    Complement?: string | undefined
+    Neighborhood: string
+    City: string
+    State: string
+    FormOfPayment: string
+  }
+  selectedItem: ItemProps[]
+  totalPrice: number
+}
+
 interface OrderContextType {
   itemsCart: ItemProps[]
+  orders: NewOrderData[]
   addItemToCart: (item: ItemProps) => void
   removeItemFromCart: (id: string) => void
   clearCart: () => void
   increaseItemInCartAmount: (itemName: string) => void
   decreaseItemInCartAmount: (itemName: string) => void
+  createNewOrder: (order: NewOrderData) => void
 }
 
 export const OrderContext = createContext({} as OrderContextType)
@@ -23,7 +40,13 @@ interface OrderContextProviderProps {
 }
 
 export function OrderContextProvider({ children }: OrderContextProviderProps) {
+  const [orders, setOrder] = useState<NewOrderData[]>([])
+
   const [itemsCart, setItemsCart] = useState<ItemProps[]>([])
+
+  function createNewOrder(order: NewOrderData) {
+    setOrder((state) => [...state, order])
+  }
 
   function increaseItemInCartAmount(itemName: string) {
     const newItemsCart = itemsCart.map((item) => {
@@ -70,11 +93,13 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
     <OrderContext.Provider
       value={{
         itemsCart,
+        orders,
         addItemToCart,
         removeItemFromCart,
         clearCart,
         increaseItemInCartAmount,
         decreaseItemInCartAmount,
+        createNewOrder,
       }}
     >
       {children}
