@@ -1,5 +1,6 @@
 import { Minus, Plus, ShoppingCartSimple } from 'phosphor-react'
-import { useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { OrderContext } from '../../../../contexts/OrderContext'
 
 import {
   AddCartButton,
@@ -16,11 +17,14 @@ interface ItemCardProps {
     imageURL: string
     tags: string[]
     description: string
-    price: string
+    price: number
+    amount: number
   }
 }
 
 export function ItemCard({ item }: ItemCardProps) {
+  const { addItemToCart } = useContext(OrderContext)
+
   const [amount, setAmount] = useState(1)
 
   function handleIncreaseAmount() {
@@ -30,6 +34,14 @@ export function ItemCard({ item }: ItemCardProps) {
   function handleDecreaseAmount() {
     setAmount((state) => (state > 1 ? state - 1 : state))
   }
+
+  function handleAddItensToCart() {
+    addItemToCart(item)
+  }
+
+  useEffect(() => {
+    item.amount = amount
+  }, [item, amount])
 
   return (
     <CardContainer>
@@ -43,7 +55,7 @@ export function ItemCard({ item }: ItemCardProps) {
       <p>{item.description}</p>
       <ItemPriceContainer>
         <span>
-          R$ <strong>{item.price}</strong>
+          R$ <strong>{item.price.toFixed(2)}</strong>
         </span>
         <AmountContainer>
           <div>
@@ -62,7 +74,7 @@ export function ItemCard({ item }: ItemCardProps) {
             />
           </div>
 
-          <AddCartButton>
+          <AddCartButton onClick={handleAddItensToCart}>
             <ShoppingCartSimple size={22} weight="fill" />
           </AddCartButton>
         </AmountContainer>

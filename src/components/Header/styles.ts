@@ -16,10 +16,6 @@ export const LocaleAndCartContainer = styled.div`
   gap: 12px;
 
   button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
     padding: 8px;
 
     border: 0;
@@ -30,6 +26,12 @@ export const LocaleAndCartContainer = styled.div`
 
     position: relative;
     cursor: pointer;
+
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 `
 

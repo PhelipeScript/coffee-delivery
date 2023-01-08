@@ -1,6 +1,9 @@
 import { MapPin, ShoppingCart } from 'phosphor-react'
+import { useContext } from 'react'
+import { NavLink } from 'react-router-dom'
 
 import coffeeLogo from '../../assets/coffee-delivery-logo.svg'
+import { OrderContext } from '../../contexts/OrderContext'
 import {
   CartCounter,
   HeaderContainer,
@@ -9,17 +12,28 @@ import {
 } from './styles'
 
 export function Header() {
+  const { itemsCart } = useContext(OrderContext)
+
   return (
     <HeaderContainer>
-      <img src={coffeeLogo} alt="" />
+      <NavLink to="/">
+        <img src={coffeeLogo} alt="" />
+      </NavLink>
       <LocaleAndCartContainer>
         <LocaleContainer>
           <MapPin size={19} weight="fill" />
-          <span>Porto Alegre, RS</span>
+          <span>Brazil</span>
         </LocaleContainer>
         <button>
-          <CartCounter>0</CartCounter>
-          <ShoppingCart size={22} weight="fill" />
+          {itemsCart.length !== 0 ? (
+            <CartCounter>{itemsCart.length}</CartCounter>
+          ) : (
+            <></>
+          )}
+
+          <NavLink to="/checkout">
+            <ShoppingCart color="#C47F17" size={22} weight="fill" />
+          </NavLink>
         </button>
       </LocaleAndCartContainer>
     </HeaderContainer>

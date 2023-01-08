@@ -1,7 +1,7 @@
 import { Minus, Plus, Trash } from 'phosphor-react'
-import { useState } from 'react'
+import { useContext } from 'react'
+import { OrderContext } from '../../../contexts/OrderContext'
 
-import arabe from '../../../assets/coffees/arabe.svg'
 import {
   AmountAndDeleteContainer,
   AmountContainer,
@@ -9,22 +9,37 @@ import {
   ItemContainer,
 } from './styles'
 
-export function CartsItem() {
-  const [amount, setAmount] = useState(1)
+interface CartsItemProps {
+  name: string
+  image: string
+  price: number
+  amount: number
+}
+
+export function CartsItem({ name, image, price, amount }: CartsItemProps) {
+  const {
+    removeItemFromCart,
+    increaseItemInCartAmount,
+    decreaseItemInCartAmount,
+  } = useContext(OrderContext)
 
   function handleIncreaseAmount() {
-    setAmount((state) => (state < 99 ? state + 1 : state))
+    increaseItemInCartAmount(name)
   }
 
   function handleDecreaseAmount() {
-    setAmount((state) => (state > 1 ? state - 1 : state))
+    decreaseItemInCartAmount(name)
+  }
+
+  function handleRemoveItemFromCart() {
+    removeItemFromCart(name)
   }
 
   return (
     <ItemContainer>
-      <img src={arabe} alt="imagem do cafe" />
+      <img src={image} alt="" />
       <div>
-        <h3>Expresso Tradicional</h3>
+        <h3>{name}</h3>
         <AmountAndDeleteContainer>
           <AmountContainer>
             <Minus
@@ -41,13 +56,13 @@ export function CartsItem() {
               weight="bold"
             />
           </AmountContainer>
-          <DeleteContainer>
+          <DeleteContainer onClick={handleRemoveItemFromCart}>
             <Trash color="#8047F8" size={16} />
             Remover
           </DeleteContainer>
         </AmountAndDeleteContainer>
       </div>
-      <strong>R$ {(9.9 * amount).toFixed(2)}</strong>
+      <strong>R$ {(price * amount).toFixed(2)}</strong>
     </ItemContainer>
   )
 }
