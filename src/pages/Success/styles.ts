@@ -73,6 +73,10 @@ const BackgroundIcon = styled.span`
   padding: 8px;
   border-radius: 1000px;
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   color: ${(props) => props.theme.white};
 `
 
