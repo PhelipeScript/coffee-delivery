@@ -22,6 +22,14 @@ export const SuccessContainer = styled.main`
     display: flex;
     align-items: center;
     gap: 6.375rem;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
+
+    img {
+      width: 100%;
+    }
   }
 `
 
@@ -52,6 +60,10 @@ export const DetailsContainer = styled.div`
   div {
     display: flex;
     gap: 0.75rem;
+  }
+
+  @media (max-width: 768px) {
+    width: 26rem;
   }
 `
 
