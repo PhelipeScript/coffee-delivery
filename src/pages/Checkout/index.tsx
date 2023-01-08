@@ -91,9 +91,8 @@ export function Checkout() {
     createNewOrder({ address, selectedItem, totalPrice })
     reset()
     clearCart()
-    setTimeout(() => {
-      navigate('/checkout/success')
-    }, 1000)
+
+    navigate('/coffee-delivery/checkout/success')
   }
 
   useEffect(() => {
@@ -133,7 +132,7 @@ export function Checkout() {
     <FormContainer onSubmit={handleSubmit(handleCreateNewOrder)}>
       <CompleteOrderContainer>
         <h2>
-          <NavLink to="/">
+          <NavLink to="/coffee-delivery">
             <CaretLeft />
           </NavLink>
           Complete seu pedido

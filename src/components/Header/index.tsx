@@ -16,7 +16,7 @@ export function Header() {
 
   return (
     <HeaderContainer>
-      <NavLink to="/">
+      <NavLink to="/coffee-delivery">
         <img src={coffeeLogo} alt="" />
       </NavLink>
       <LocaleAndCartContainer>
@@ -31,7 +31,7 @@ export function Header() {
             <></>
           )}
 
-          <NavLink to="/checkout">
+          <NavLink to="/coffee-delivery/checkout">
             <ShoppingCart color="#C47F17" size={22} weight="fill" />
           </NavLink>
         </button>
